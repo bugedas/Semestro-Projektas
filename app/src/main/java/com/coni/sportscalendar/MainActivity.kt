@@ -2,6 +2,7 @@ package com.coni.sportscalendar
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+//import com.facebook.FacebookSdk
 
 class MainActivity : AppCompatActivity() {
 
