@@ -6,8 +6,13 @@ import android.os.Bundle
 
 class MainActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    val baseUrl:String = "http://localhost:5000"
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
     }
+
+    fun getLoginCrediantials
 }
