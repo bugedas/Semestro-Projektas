@@ -9,13 +9,20 @@ import org.json.JSONObject
 import java.net.CookieHandler
 import java.net.CookieManager
 import java.net.CookiePolicy
+import com.google.gson.GsonBuilder
+
+
+
 
 class Server private constructor(private val context: Context)
 {
     private val serverUrl :String = "http://10.0.2.2:8000"
     private val loginPath :String = "/login"
     private val registerPath :String = "/account"
+    private val postPath :String = "/events"
     private val requestBuilder = HttpRequestBuilder(context, serverUrl)
+    private var gson: Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+
     companion object
     {
         @Volatile
@@ -30,10 +37,20 @@ class Server private constructor(private val context: Context)
         }
     }
 
+    public fun createPost (postInfo :Post, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    {
+        val jsonObj = JSONObject(gson.toJson(postInfo))
+        val request = requestBuilder.buildJsonRequest(Request.Method.POST, postPath, jsonObj, onSuccess, onFail)
+
+        // TODO: papildyti
+        Log.d("Server", "Sending request to create a post: ${jsonObj.toString()}")
+        HttpConnection.getInstance(context).addToRequestQueue(request)
+    }
+
     public fun sendLoginRequest (loginInfo: User, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
     {
         // Converting data to json object
-        val jsonObj = JSONObject(Gson().toJson(loginInfo))
+        val jsonObj = JSONObject(gson.toJson(loginInfo))
         val request = requestBuilder.buildJsonRequest(Request.Method.POST, loginPath, jsonObj, onSuccess, onFail)
 
         // TODO: papildyti
@@ -44,7 +61,7 @@ class Server private constructor(private val context: Context)
     public fun sendRegisterRequest (registerInfo: UserRegistrationInformation, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
     {
         // Converting data to json object
-        val jsonObj = JSONObject(Gson().toJson(registerInfo))
+        val jsonObj = JSONObject(gson.toJson(registerInfo))
         val request = requestBuilder.buildJsonRequest(Request.Method.POST, registerPath, jsonObj, onSuccess, onFail)
 
         Log.d("Server", "Sending registration request to the server: ${jsonObj.toString()}")

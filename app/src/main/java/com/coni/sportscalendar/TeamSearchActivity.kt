@@ -81,7 +81,8 @@ class TeamSearchActivity : AppCompatActivity()
             }
             R.id.create_post ->
             {
-
+                val intent = Intent(this,CreatePostActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)

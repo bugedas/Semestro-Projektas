@@ -8,9 +8,6 @@ import com.android.volley.Response
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 
-
-//import com.facebook.FacebookSdk
-
 class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -33,7 +30,6 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegistrationActivity::class.java)
             startActivity(intent)
         }
-
 
     }
 

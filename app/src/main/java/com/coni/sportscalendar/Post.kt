@@ -1,11 +1,17 @@
 package com.coni.sportscalendar
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Post(
-    @SerializedName("creator") val authorID:Int,
-    @SerializedName("description") val description:String,
-    @SerializedName("location") val location:String)
+    @Expose(serialize = false)
+    val authorID:Int,
+    @Expose(serialize = true)
+    @SerializedName("description")
+    val description:String,
+    @Expose(serialize = true)
+    @SerializedName("location")
+    val location:String)
 {
 
 }

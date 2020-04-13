@@ -6,6 +6,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import kotlinx.android.synthetic.main.activity_login.*
+import org.json.JSONException
 import org.json.JSONObject
 
 class HttpRequestBuilder(context:Context, baseUrl:String)
@@ -18,12 +19,27 @@ class HttpRequestBuilder(context:Context, baseUrl:String)
         val response = Response.ErrorListener ()
         { error ->
             if (error.networkResponse != null) {
-                val json: JSONObject = JSONObject(String(error.networkResponse.data))
-                Toast.makeText(
-                    context.applicationContext,
-                    "Error ${error.networkResponse.statusCode}: " + "${json.getString("data")}",
-                    Toast.LENGTH_LONG
-                ).show()
+                //TODO: maybe to better error handling https://stackoverflow.com/questions/24700582/handle-volley-error
+                try
+                {
+                    val json: JSONObject = JSONObject(String(error.networkResponse.data))
+
+                    Toast.makeText(
+                        context.applicationContext,
+                        "Error ${error.networkResponse.statusCode}: " + "${json.getString("data")}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                catch (e: JSONException)
+                {
+                    Toast.makeText(
+                        context.applicationContext,
+                        "Error ${error.networkResponse.statusCode}: ",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+
             } else
                 Toast.makeText(context.applicationContext, "${error.toString()}", Toast.LENGTH_LONG).show()
         }
