@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrationActivity">
+
+    <EditText
+        android:id="@+id/editText_registrationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:ems="10"
+        android:hint="Vardas"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_registrationPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Slaptazodis"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/editText_registrationName"
+        app:layout_constraintStart_toStartOf="@+id/editText_registrationName"
+        app:layout_constraintTop_toBottomOf="@+id/editText_registrationName" />
+
+    <EditText
+        android:id="@+id/editText_registrationRepeatPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Pakatorkite slaptazodi"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/editText_registrationPassword"
+        app:layout_constraintStart_toStartOf="@+id/editText_registrationPassword"
+        app:layout_constraintTop_toBottomOf="@+id/editText_registrationPassword" />
+
+    <Button
+        android:id="@+id/button_register"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Register"
+        app:layout_constraintEnd_toEndOf="@+id/editText_registrationRepeatPassword"
+        app:layout_constraintStart_toStartOf="@+id/editText_registrationRepeatPassword"
+        app:layout_constraintTop_toBottomOf="@+id/editText_registrationRepeatPassword" />
+</androidx.constraintlayout.widget.ConstraintLayout>

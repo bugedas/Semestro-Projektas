@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 
 class HttpRequestBuilder(context:Context, baseUrl:String)
@@ -14,7 +15,20 @@ class HttpRequestBuilder(context:Context, baseUrl:String)
 
     private fun getDefaultErrorResponse(context: Context):Response.ErrorListener
     {
-        return Response.ErrorListener{ error -> Toast.makeText(context.applicationContext, "Error: ${error.message}", Toast.LENGTH_LONG )}
+        val response = Response.ErrorListener ()
+        { error ->
+            if (error.networkResponse != null) {
+                val json: JSONObject = JSONObject(String(error.networkResponse.data))
+                Toast.makeText(
+                    context.applicationContext,
+                    "Error ${error.networkResponse.statusCode}: " + "${json.getString("data")}",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else
+                Toast.makeText(context.applicationContext, "${error.toString()}", Toast.LENGTH_LONG).show()
+        }
+
+        return response
     }
 
     fun buildJsonRequest (requestMethod:Int, urlParameters:String, data:JSONObject?, successfulResponse:Response.Listener<JSONObject>, errorResponse:Response.ErrorListener? = null):JsonObjectRequest

@@ -18,11 +18,6 @@ class HttpConnection(context:Context)
         fun getInstance(context: Context) = instance ?:
         synchronized(this)
         {
-            if(instance == null)
-            {
-                // default CookieManager
-                CookieHandler.setDefault(CookieManager(null, CookiePolicy.ACCEPT_ALL))
-            }
             instance ?: HttpConnection(context).also { instance = it }
 
         }
