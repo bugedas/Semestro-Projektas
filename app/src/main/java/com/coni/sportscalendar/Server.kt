@@ -10,8 +10,7 @@ import java.net.CookieHandler
 import java.net.CookieManager
 import java.net.CookiePolicy
 import com.google.gson.GsonBuilder
-
-
+import org.json.JSONArray
 
 
 class Server private constructor(private val context: Context)
@@ -37,7 +36,31 @@ class Server private constructor(private val context: Context)
         }
     }
 
-    public fun leavePost (eventID :Int,  onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    fun getPosts (location :String, onSuccess: Response.Listener <JSONArray>, onFail : Response.ErrorListener? = null)
+    {
+        val request = requestBuilder.buildJsonArrayRequest(Request.Method.GET, "$postPath?location=$location", null, onSuccess, onFail)
+
+        Log.d("Server", "Getting posts from server with location =  $location")
+        HttpConnection.getInstance(context).addToRequestQueue(request)
+    }
+
+    fun getPosts (creatorID :Int, onSuccess: Response.Listener <JSONArray>, onFail : Response.ErrorListener? = null)
+    {
+        val request = requestBuilder.buildJsonArrayRequest(Request.Method.GET, "$postPath?creatorID=$creatorID", null, onSuccess, onFail)
+
+        Log.d("Server", "Getting posts from server with creator id =  $creatorID")
+        HttpConnection.getInstance(context).addToRequestQueue(request)
+    }
+
+    fun getPosts (creatorID :Int, location :String,  onSuccess: Response.Listener <JSONArray>, onFail : Response.ErrorListener? = null)
+    {
+        val request = requestBuilder.buildJsonArrayRequest(Request.Method.GET, "$postPath?creatorID=$creatorID&location=$location", null, onSuccess, onFail)
+
+        Log.d("Server", "Getting posts from server with creator =  $creatorID and location = $location")
+        HttpConnection.getInstance(context).addToRequestQueue(request)
+    }
+
+    fun leavePost (eventID :Int,  onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
     {
         val request = requestBuilder.buildJsonRequest(Request.Method.DELETE, "$postPath/$eventID/users", null, onSuccess, onFail)
 
@@ -45,7 +68,7 @@ class Server private constructor(private val context: Context)
         HttpConnection.getInstance(context).addToRequestQueue(request)
     }
 
-    public fun joinPost (eventID :Int,  onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    fun joinPost (eventID :Int,  onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
     {
         val request = requestBuilder.buildJsonRequest(Request.Method.PATCH, "$postPath/$eventID/users", null, onSuccess, onFail)
 
@@ -53,7 +76,7 @@ class Server private constructor(private val context: Context)
         HttpConnection.getInstance(context).addToRequestQueue(request)
     }
 
-    public fun createPost (postInfo :Post, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    fun createPost (postInfo :Post, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
     {
         val jsonObj = JSONObject(jasonParser.toJson(postInfo))
         val request = requestBuilder.buildJsonRequest(Request.Method.POST, postPath, jsonObj, onSuccess, onFail)
@@ -62,7 +85,7 @@ class Server private constructor(private val context: Context)
         HttpConnection.getInstance(context).addToRequestQueue(request)
     }
 
-    public fun sendLoginRequest (loginInfo: User, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    fun sendLoginRequest (loginInfo: User, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
     {
         // Converting data to json object
         val jsonObj = JSONObject(jasonParser.toJson(loginInfo))
@@ -72,7 +95,7 @@ class Server private constructor(private val context: Context)
         HttpConnection.getInstance(context).addToRequestQueue(request)
     }
 
-    public fun sendRegisterRequest (registerInfo: UserRegistrationInformation, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    fun sendRegisterRequest (registerInfo: UserRegistrationInformation, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
     {
         // Converting data to json object
         val jsonObj = JSONObject(jasonParser.toJson(registerInfo))

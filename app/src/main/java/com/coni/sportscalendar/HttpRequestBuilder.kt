@@ -4,8 +4,10 @@ import android.content.Context
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import kotlinx.android.synthetic.main.activity_login.*
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -53,6 +55,14 @@ class HttpRequestBuilder(context:Context, baseUrl:String)
 
         return JsonObjectRequest(requestMethod, baseUrl + urlParameters, data, successfulResponse, errorResponse)
     }
+
+    fun buildJsonArrayRequest (requestMethod:Int, urlParameters:String, data:JSONArray?, successfulResponse:Response.Listener<JSONArray>, errorResponse:Response.ErrorListener? = null):JsonArrayRequest
+    {
+        val errorResponse = errorResponse?: defaultErrorResponse
+
+        return JsonArrayRequest(requestMethod, baseUrl + urlParameters, data, successfulResponse, errorResponse)
+    }
+
 
     fun setErrorResponse(response:Response.ErrorListener)
     {
