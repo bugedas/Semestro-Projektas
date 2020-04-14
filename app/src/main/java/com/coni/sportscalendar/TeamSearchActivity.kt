@@ -2,13 +2,19 @@ package com.coni.sportscalendar
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_login.*
+import com.android.volley.Response
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_team_search.*
+import org.json.JSONArray
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class TeamSearchActivity : AppCompatActivity()
 {
@@ -22,11 +28,23 @@ class TeamSearchActivity : AppCompatActivity()
         initRecyclerView()
         fetchPosts()
 
+
+    }
+
+    private val successFetchPostsResponse = Response.Listener <JSONArray>()
+    { response ->
+        val jsonParser = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+        Log.d("LoginActivity", "NetworkResponse : ${response.toString()}")
+        val dataArray: Array<Post> = jsonParser.fromJson(response.toString(), Array<Post>::class.java)//.toCollection(ArrayList())
+        val dataArrayList: ArrayList<Post> = ArrayList(Arrays.asList(*dataArray))
+        postAdapter.submitList(dataArrayList)
+        postAdapter.notifyDataSetChanged()
     }
 
     private fun fetchPosts()
     {
-        var dataArray = ArrayList<Post>()
+        Server.getInstance(this).getPosts("Kaunas",successFetchPostsResponse)
+        /*var dataArray = ArrayList<Post>()
         dataArray.add(Post(1234, "Aprasymas pavyzdys", "Kaunas"))
         dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
         dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
@@ -38,7 +56,7 @@ class TeamSearchActivity : AppCompatActivity()
         dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
         dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
 
-        postAdapter.submitList(dataArray)
+        postAdapter.submitList(dataArray)*/
     }
     private fun initRecyclerView ()
     {

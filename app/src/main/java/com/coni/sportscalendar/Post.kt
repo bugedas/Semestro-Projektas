@@ -4,13 +4,13 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Post(
-    @Expose(serialize = false)
+    @Expose(serialize = false, deserialize = false)
     val authorID:Int,
     @Expose(serialize = true)
-    @SerializedName("description")
+    @SerializedName("Description")
     val description:String,
     @Expose(serialize = true)
-    @SerializedName("location")
+    @SerializedName("Location")
     val location:String)
 {
 
