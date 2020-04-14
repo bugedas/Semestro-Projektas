@@ -21,7 +21,7 @@ class Server private constructor(private val context: Context)
     private val registerPath :String = "/account"
     private val postPath :String = "/events"
     private val requestBuilder = HttpRequestBuilder(context, serverUrl)
-    private var gson: Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+    private var jasonParser: Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
 
     companion object
     {
@@ -37,12 +37,27 @@ class Server private constructor(private val context: Context)
         }
     }
 
+    public fun leavePost (eventID :Int,  onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    {
+        val request = requestBuilder.buildJsonRequest(Request.Method.DELETE, "$postPath/$eventID/users", null, onSuccess, onFail)
+
+        Log.d("Server", "Joining event. Event id: $eventID")
+        HttpConnection.getInstance(context).addToRequestQueue(request)
+    }
+
+    public fun joinPost (eventID :Int,  onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    {
+        val request = requestBuilder.buildJsonRequest(Request.Method.PATCH, "$postPath/$eventID/users", null, onSuccess, onFail)
+
+        Log.d("Server", "Joining event. Event id: $eventID")
+        HttpConnection.getInstance(context).addToRequestQueue(request)
+    }
+
     public fun createPost (postInfo :Post, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
     {
-        val jsonObj = JSONObject(gson.toJson(postInfo))
+        val jsonObj = JSONObject(jasonParser.toJson(postInfo))
         val request = requestBuilder.buildJsonRequest(Request.Method.POST, postPath, jsonObj, onSuccess, onFail)
 
-        // TODO: papildyti
         Log.d("Server", "Sending request to create a post: ${jsonObj.toString()}")
         HttpConnection.getInstance(context).addToRequestQueue(request)
     }
@@ -50,10 +65,9 @@ class Server private constructor(private val context: Context)
     public fun sendLoginRequest (loginInfo: User, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
     {
         // Converting data to json object
-        val jsonObj = JSONObject(gson.toJson(loginInfo))
+        val jsonObj = JSONObject(jasonParser.toJson(loginInfo))
         val request = requestBuilder.buildJsonRequest(Request.Method.POST, loginPath, jsonObj, onSuccess, onFail)
 
-        // TODO: papildyti
         Log.d("Server", "Sending login request to the server: ${jsonObj.toString()}")
         HttpConnection.getInstance(context).addToRequestQueue(request)
     }
@@ -61,7 +75,7 @@ class Server private constructor(private val context: Context)
     public fun sendRegisterRequest (registerInfo: UserRegistrationInformation, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
     {
         // Converting data to json object
-        val jsonObj = JSONObject(gson.toJson(registerInfo))
+        val jsonObj = JSONObject(jasonParser.toJson(registerInfo))
         val request = requestBuilder.buildJsonRequest(Request.Method.POST, registerPath, jsonObj, onSuccess, onFail)
 
         Log.d("Server", "Sending registration request to the server: ${jsonObj.toString()}")

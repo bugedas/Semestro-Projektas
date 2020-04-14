@@ -24,7 +24,7 @@ class RegistrationActivity : AppCompatActivity() {
 
     private val successRegisterResponse = Response.Listener <JSONObject>()
     { response ->
-        Log.d("LoginActivity", "NetworkResponse : ${response.toString()}")
+        Log.d("RegisterActivity", "NetworkResponse : ${response.toString()}")
         finish()
     }
 }
