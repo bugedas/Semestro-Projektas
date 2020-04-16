@@ -17,7 +17,7 @@ class RegistrationActivity : AppCompatActivity() {
 
         button_register.setOnClickListener()
         {
-            val registration :UserRegistrationInformation = UserRegistrationInformation( editText_registrationName.text.toString(), editText_registrationPassword.text.toString(), editText_registrationRepeatPassword.text.toString())
+            val registration :UserRegistrationInformation = UserRegistrationInformation( editText_registrationName.text.toString(), editText_registrationPassword.text.toString(), editText_registrationRepeatPassword.text.toString(), editText_registrationName.text.toString())
             Server.getInstance(this).sendRegisterRequest(registration, successRegisterResponse)
         }
     }

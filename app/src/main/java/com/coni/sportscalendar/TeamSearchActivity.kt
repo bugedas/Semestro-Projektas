@@ -16,19 +16,21 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class TeamSearchActivity : AppCompatActivity()
+class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickListener
 {
     private lateinit var postAdapter: PostRecyclerAdapter
+   // private
     @Override
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team_search)
+        val username = intent.getStringExtra(LoginActivity.USER_NAME)
+        supportActionBar?.title = username
+
         CheckIfUserIsLoggedIn()
         initRecyclerView()
         fetchPosts()
-
-
     }
 
     private val successFetchPostsResponse = Response.Listener <JSONArray>()
@@ -36,7 +38,7 @@ class TeamSearchActivity : AppCompatActivity()
         val jsonParser = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
         Log.d("LoginActivity", "NetworkResponse : ${response.toString()}")
         val dataArray: Array<Post> = jsonParser.fromJson(response.toString(), Array<Post>::class.java)//.toCollection(ArrayList())
-        val dataArrayList: ArrayList<Post> = ArrayList(Arrays.asList(*dataArray))
+        val dataArrayList: ArrayList<Post> = ArrayList(listOf(*dataArray))
         postAdapter.submitList(dataArrayList)
         postAdapter.notifyDataSetChanged()
     }
@@ -44,19 +46,6 @@ class TeamSearchActivity : AppCompatActivity()
     private fun fetchPosts()
     {
         Server.getInstance(this).getPosts("Kaunas",successFetchPostsResponse)
-        /*var dataArray = ArrayList<Post>()
-        dataArray.add(Post(1234, "Aprasymas pavyzdys", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-
-        postAdapter.submitList(dataArray)*/
     }
     private fun initRecyclerView ()
     {
@@ -64,7 +53,7 @@ class TeamSearchActivity : AppCompatActivity()
             layoutManager = LinearLayoutManager (this@TeamSearchActivity)
             val spacing = TopSpacingItemDecoration(30)
             addItemDecoration(spacing)
-            postAdapter = PostRecyclerAdapter()
+            postAdapter = PostRecyclerAdapter(this@TeamSearchActivity)
             adapter = postAdapter
         }
     }
@@ -89,7 +78,7 @@ class TeamSearchActivity : AppCompatActivity()
     @Override
     override fun onOptionsItemSelected(item: MenuItem): Boolean
     {
-        when (item?.itemId)
+        when (item.itemId)
         {
             R.id.menu_sign_out ->
             {
@@ -104,5 +93,11 @@ class TeamSearchActivity : AppCompatActivity()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPostClick(position: Int)
+    {
+        val intent = Intent(this,CreatePostActivity::class.java)
+        startActivity(intent)
     }
 }

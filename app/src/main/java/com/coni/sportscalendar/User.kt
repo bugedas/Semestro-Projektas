@@ -5,10 +5,13 @@ import com.google.gson.annotations.SerializedName
 
 data class User(
     @SerializedName("username")
-    @Expose(serialize = true)
+    @Expose(serialize = false)
     val username:String,
     @SerializedName("password")
     @Expose(serialize = true)
-    val password:String)
+    val password:String,
+    @SerializedName("email")
+    @Expose(serialize = true)
+    val email:String)
 {
 }

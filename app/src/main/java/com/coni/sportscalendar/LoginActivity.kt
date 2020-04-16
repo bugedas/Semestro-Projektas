@@ -10,6 +10,11 @@ import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
 
+    companion object
+    {
+        val USER_NAME: String = "USER_NAME"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -18,10 +23,9 @@ class LoginActivity : AppCompatActivity() {
         // Pvz
         supportActionBar?.title = "Prisijungimas"
 
-
         button_Login.setOnClickListener()
         {
-            val login :User = User( editText_Name.text.toString(), editText_Password.text.toString())
+            val login :User = User( editText_Name.text.toString(), editText_Password.text.toString(), editText_Name.text.toString())
             Server.getInstance(this).sendLoginRequest(login, successLoginResponse)
         }
 
@@ -53,6 +57,8 @@ class LoginActivity : AppCompatActivity() {
         //TODO: Stop remaining network requests for this layout
         //HttpConnection.getInstance(this).requestQueue.stop()
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+        // PVZ: kaip perduoti duomenis i kita activity
+        intent.putExtra(USER_NAME, editText_Name.text.toString())
         startActivity(intent)
     }
 }
