@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/teamSearchActivity">
+    <activity
+        android:id="@+id/teamSearchActivity"
+        android:name="com.coni.sportscalendar.TeamSearchActivity"
+        android:label="TeamSearchActivity" />
+    <activity
+        android:id="@+id/createPostActivity2"
+        android:name="com.coni.sportscalendar.CreatePostActivity"
+        android:label="activity_create_post"
+        tools:layout="@layout/activity_create_post" />
+</navigation>
