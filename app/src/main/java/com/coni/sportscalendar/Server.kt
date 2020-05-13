@@ -36,6 +36,11 @@ class Server private constructor(private val context: Context)
         }
     }
 
+    fun resetCookies()
+    {
+        cookieManager.cookieStore.removeAll();
+    }
+
     fun getPosts (location :String, onSuccess: Response.Listener <JSONArray>, onFail : Response.ErrorListener? = null)
     {
         val request = requestBuilder.buildJsonArrayRequest(Request.Method.GET, "$postPath?location=$location", null, onSuccess, onFail)

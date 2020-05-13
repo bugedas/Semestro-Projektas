@@ -11,10 +11,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreatePostActivity"></activity>
-        <activity android:name=".RegistrationActivity" >
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LoginActivity"></meta-data>
+        <activity android:name=".PostViewActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TeamSearchActivity" />
+        </activity>
+        <activity android:name=".CreatePostActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TeamSearchActivity" />
+        </activity>
+        <activity android:name=".RegistrationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginActivity" />
         </activity>
 
         <meta-data

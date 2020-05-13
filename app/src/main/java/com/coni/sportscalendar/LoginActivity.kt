@@ -10,10 +10,7 @@ import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
 
-    companion object
-    {
-        val USER_NAME: String = "USER_NAME"
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -58,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
         //HttpConnection.getInstance(this).requestQueue.stop()
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
         // PVZ: kaip perduoti duomenis i kita activity
-        intent.putExtra(USER_NAME, editText_Name.text.toString())
+        //intent.putExtra(USER_NAME, editText_Name.text.toString())
         startActivity(intent)
     }
 }
