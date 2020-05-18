@@ -1,53 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    android:background="@color/colorPrimaryDark"
+
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="64dp"
+        android:src="@mipmap/ic_launcher" />
+
+        <EditText
+            android:id="@+id/editText_Name"
+            style="@style/LoginEditText"
+            android:paddingTop="5dp"
+            android:hint="Name"
+            android:inputType="textPersonName" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/textbox_shape"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        >
+    <EditText
+        android:id="@+id/editText_Password"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_weight="6"
+        android:hint="Password"
+        android:paddingLeft="15dp"
+        android:layout_marginLeft="1dp"
+        android:background="@color/colorPrimary"
+        android:inputType="textPassword" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:foreground="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            android:src="@mipmap/login_question"
+            android:focusable="true" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_Login"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Login"
-        app:layout_constraintEnd_toEndOf="@+id/editText_Password"
-        app:layout_constraintStart_toStartOf="@+id/editText_Password"
-        app:layout_constraintTop_toBottomOf="@+id/editText_Password" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/sign_in_button"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:text="Sign In" />
 
-    <EditText
-        android:id="@+id/editText_Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:ems="10"
-        android:hint="Vardas"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editText_Password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="Slaptazodis"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/editText_Name"
-        app:layout_constraintStart_toStartOf="@+id/editText_Name"
-        app:layout_constraintTop_toBottomOf="@+id/editText_Name" />
-
-    <TextView
+    <Button
         android:id="@+id/textView_registrationPage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Do not have an account?"
-        app:layout_constraintEnd_toEndOf="@+id/button_Login"
-        app:layout_constraintStart_toStartOf="@+id/button_Login"
-        app:layout_constraintTop_toBottomOf="@+id/button_Login" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_margin="16dp"
+        android:background="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:text="Sign Up" />
+</LinearLayout>
+</ScrollView>
