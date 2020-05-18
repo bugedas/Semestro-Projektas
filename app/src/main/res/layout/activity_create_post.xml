@@ -1,41 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".CreatePostActivity">
-
-    <Button
-        android:id="@+id/button_submit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:textColorHighlight="#FFFFFF"
-        android:background="@android:color/holo_green_light"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/editText_postLocation"
+    android:layout_height="match_parent">
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Vieta"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editText_postDescription"
-        android:layout_width="0dp"
-        android:layout_height="221dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Aprasymas"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_postLocation" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textSize="32sp"
+        android:text="Create Event"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        >
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/post_view_location"
+            android:layout_weight="1"/>
+        <EditText
+            android:id="@+id/create_location"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:hint="Location"
+            android:paddingLeft="8dp"
+            android:background="@drawable/textbox_shape"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        >
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/post_view_description"
+            android:layout_weight="1"/>
+        <EditText
+            android:id="@+id/create_description"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:hint="Description"
+            android:paddingLeft="8dp"
+            android:background="@drawable/textbox_shape"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        >
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/post_view_date"
+            android:layout_weight="1"/>
+        <EditText
+            android:inputType="date"
+            android:id="@+id/create_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:hint="Date"
+            android:paddingLeft="8dp"
+            android:background="@drawable/textbox_shape"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        >
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/post_view_sport"
+            android:layout_weight="1"/>
+        <EditText
+            android:id="@+id/create_sport"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:hint="Sport"
+            android:paddingLeft="8dp"
+            android:background="@drawable/textbox_shape"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/button_submit"
+        android:layout_marginTop="55dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:clickable="true"
+        android:layout_gravity="center"
+        android:foreground="?attr/selectableItemBackground"
+        android:src="@mipmap/post_view_join"/>
+</LinearLayout>

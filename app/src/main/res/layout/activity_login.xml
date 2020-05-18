@@ -25,7 +25,7 @@
             android:id="@+id/editText_Name"
             style="@style/LoginEditText"
             android:paddingTop="5dp"
-            android:hint="Name"
+            android:hint="Email"
             android:inputType="textPersonName" />
     <LinearLayout
         android:layout_width="match_parent"

@@ -14,7 +14,7 @@ class CreatePostActivity : AppCompatActivity() {
 
         button_submit.setOnClickListener()
         {
-            val post = Post(1, editText_postDescription.text.toString(), editText_postLocation.text.toString())
+            val post = Post(0,1, create_location.text.toString(), create_description.text.toString(), create_sport.text.toString())
             Server.getInstance(this).createPost(post, successPostResponse)
         }
     }
