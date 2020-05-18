@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#4CAF50"
-        android:text="JOIN"
+        android:text="@string/join"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -21,7 +21,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:enabled="true"
-        android:text="LEAVE"
+        android:text="@string/leave"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,41 +29,45 @@
 
     <TextView
         android:id="@+id/textView_postView_location"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Vieta :"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="6dp"
+        android:text="@string/vieta"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_postView_time" />
 
     <TextView
         android:id="@+id/textView_postView_description"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Description :"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="6dp"
+        android:text="@string/description"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_postView_location" />
 
     <TextView
         android:id="@+id/textView_postView_participants"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Participants :"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="6dp"
+        android:text="@string/participants"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_postView_creator" />
 
     <TextView
         android:id="@+id/textView_postView_time"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Laikas"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="6dp"
+        android:text="@string/laikas"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_postView_sportType" />
 
@@ -73,18 +77,62 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="Sporto saka"
+        android:text="@string/sporto_saka"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView_postView_creator"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Kurejas"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="6dp"
+        android:text="@string/kurejas"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_postView_description" />
+
+    <TextView
+        android:id="@+id/textView_postView_sportTypeResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_postView_sportType"
+        app:layout_constraintStart_toEndOf="@+id/textView_postView_sportType" />
+
+    <TextView
+        android:id="@+id/textView_postView_timeResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_postView_time"
+        app:layout_constraintStart_toEndOf="@+id/textView_postView_time" />
+
+    <TextView
+        android:id="@+id/textView_postView_locationResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_postView_location"
+        app:layout_constraintStart_toEndOf="@+id/textView_postView_location" />
+
+    <TextView
+        android:id="@+id/textView_postView_descriptionResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_postView_description"
+        app:layout_constraintStart_toEndOf="@+id/textView_postView_description" />
+
+    <TextView
+        android:id="@+id/textView_postView_creatorResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_postView_creator"
+        app:layout_constraintStart_toEndOf="@+id/textView_postView_creator" />
+
+    <TextView
+        android:id="@+id/textView_postView_participantsResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_postView_participants"
+        app:layout_constraintStart_toEndOf="@+id/textView_postView_participants" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

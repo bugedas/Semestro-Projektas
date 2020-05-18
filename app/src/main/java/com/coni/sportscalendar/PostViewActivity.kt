@@ -16,5 +16,6 @@ class PostViewActivity : AppCompatActivity() {
         postData = Gson().fromJson(username, Post::class.java)
 
         textView_postView_description.text = "Description:  ${postData.description} "
+        textView_postView_location.text = "Vieta:  ${postData.location} "
     }
 }

@@ -2,4 +2,12 @@
     <string name="app_name">SportsCalendar</string>
     <string name="facebook_app_id">519349382322343</string>
     <string name="fb_login_protocol_scheme">fb519349382322343</string>
+    <string name="join">JOIN</string>
+    <string name="leave">LEAVE</string>
+    <string name="sporto_saka">Sporto saka</string>
+    <string name="kurejas">Kurejas</string>
+    <string name="participants">Participants :</string>
+    <string name="description">Description :</string>
+    <string name="vieta">Vieta :</string>
+    <string name="laikas">Laikas</string>
 </resources>

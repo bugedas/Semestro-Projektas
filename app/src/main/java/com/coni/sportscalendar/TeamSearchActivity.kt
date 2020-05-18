@@ -58,7 +58,7 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
 
     private fun fetchPosts()
     {
-        Server.getInstance(this).getPosts("Kaunas",successFetchPostsResponse)
+        Server.getInstance(this).getPosts(successFetchPostsResponse)
     }
     private fun initRecyclerView ()
     {
