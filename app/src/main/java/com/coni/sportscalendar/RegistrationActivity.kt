@@ -15,9 +15,9 @@ class RegistrationActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Registracija"
 
-        button_register.setOnClickListener()
+        button_RegistrationLogin.setOnClickListener()
         {
-            val registration :UserRegistrationInformation = UserRegistrationInformation( editText_registrationName.text.toString(), editText_registrationPassword.text.toString(), editText_registrationRepeatPassword.text.toString())
+            val registration :UserRegistrationInformation = UserRegistrationInformation( editText_Email.text.toString(), editText_RegistrationPassword.text.toString(), editText_Repeat_Password.text.toString(), editText_RegistrationName.text.toString())
             Server.getInstance(this).sendRegisterRequest(registration, successRegisterResponse)
         }
     }

@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.user_post.view.*
 import kotlin.math.min
 
-class PostRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
+class PostRecyclerAdapter(private val onPostClickListener :OnPostClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
     private var items = ArrayList<Post>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
     {
-        return PostViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.user_post, parent, false))
+        return PostViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.user_post, parent, false), onPostClickListener)
     }
 
     override fun getItemCount(): Int
@@ -36,7 +36,7 @@ class PostRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
         items = dataList
     }
 
-    class PostViewHolder constructor(itemView: View): RecyclerView.ViewHolder(itemView)
+    class PostViewHolder constructor(itemView: View, val onPostListener :OnPostClickListener): RecyclerView.ViewHolder(itemView), View.OnClickListener
     {
         val textViewLocation = itemView.textView_location
         val textViewAuthor = itemView.textView_author
@@ -48,6 +48,15 @@ class PostRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>()
             textViewAuthor.text = post.authorID.toString()
             textViewDescription.text = post.description.substring(0, min(post.description.length, 150)) + " ..."
 
+            itemView.setOnClickListener(this)
         }
+
+        override fun onClick(p0: View?) {
+            onPostListener.onPostClick(adapterPosition)
+        }
+    }
+    interface OnPostClickListener
+    {
+        fun onPostClick (position: Int);
     }
 }

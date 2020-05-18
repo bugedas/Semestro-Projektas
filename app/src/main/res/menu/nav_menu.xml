@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/create_post"
-        android:title="Create Post"
-        app:showAsAction="ifRoom"></item>
-    <item android:id="@+id/menu_sign_out"
-        android:title="Sign Out"
-        app:showAsAction="ifRoom"></item>
+
+    <item android:icon="@drawable/ic_search"
+        android:id="@+id/search"
+        android:title="Search"
+        app:showAsAction="ifRoom"/>
+    <item android:icon="@drawable/ic_menu"
+        android:id="@+id/menu"
+        android:title="Menu"
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/create_post"
+                android:title="Create Post"
+                android:icon="@drawable/ic_add"
+                app:showAsAction="always" />
+            <item android:id="@+id/my_posts"
+                android:icon="@drawable/ic_events"
+                android:title="My posts"
+                app:showAsAction="always" />
+            <item android:id="@+id/profile"
+                android:icon="@drawable/ic_profile"
+                android:title="Profile"
+                app:showAsAction="always" />
+            <item android:id="@+id/menu_sign_out"
+                android:icon="@drawable/ic_sign_out"
+                android:title="Sign Out"
+                app:showAsAction="always"/>
+        </menu>
+
+    </item>>
+
+
 </menu>

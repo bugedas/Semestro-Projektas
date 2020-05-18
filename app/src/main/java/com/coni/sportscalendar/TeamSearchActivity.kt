@@ -10,25 +10,39 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Response
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_team_search.*
 import org.json.JSONArray
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class TeamSearchActivity : AppCompatActivity()
+class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickListener
 {
+
+    companion object
+    {
+        const val POST_DATA: String = "POST_DATA"
+    }
+
     private lateinit var postAdapter: PostRecyclerAdapter
+    private var posts: ArrayList<Post>? = null
     @Override
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team_search)
+
+        supportActionBar?.title = ""
+
         CheckIfUserIsLoggedIn()
         initRecyclerView()
+    }
+
+    @Override
+    override fun onResume() {
+        super.onResume()
         fetchPosts()
-
-
     }
 
     private val successFetchPostsResponse = Response.Listener <JSONArray>()
@@ -36,27 +50,15 @@ class TeamSearchActivity : AppCompatActivity()
         val jsonParser = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
         Log.d("LoginActivity", "NetworkResponse : ${response.toString()}")
         val dataArray: Array<Post> = jsonParser.fromJson(response.toString(), Array<Post>::class.java)//.toCollection(ArrayList())
-        val dataArrayList: ArrayList<Post> = ArrayList(Arrays.asList(*dataArray))
-        postAdapter.submitList(dataArrayList)
+        //val dataArrayList: ArrayList<Post> = ArrayList(listOf(*dataArray))
+        posts = ArrayList(listOf(*dataArray))
+        postAdapter.submitList(posts!!)
         postAdapter.notifyDataSetChanged()
     }
 
     private fun fetchPosts()
     {
-        Server.getInstance(this).getPosts("Kaunas",successFetchPostsResponse)
-        /*var dataArray = ArrayList<Post>()
-        dataArray.add(Post(1234, "Aprasymas pavyzdys", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-        dataArray.add(Post(1234, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Kaunas"))
-
-        postAdapter.submitList(dataArray)*/
+        Server.getInstance(this).getPosts(successFetchPostsResponse)
     }
     private fun initRecyclerView ()
     {
@@ -64,7 +66,7 @@ class TeamSearchActivity : AppCompatActivity()
             layoutManager = LinearLayoutManager (this@TeamSearchActivity)
             val spacing = TopSpacingItemDecoration(30)
             addItemDecoration(spacing)
-            postAdapter = PostRecyclerAdapter()
+            postAdapter = PostRecyclerAdapter(this@TeamSearchActivity)
             adapter = postAdapter
         }
     }
@@ -89,10 +91,11 @@ class TeamSearchActivity : AppCompatActivity()
     @Override
     override fun onOptionsItemSelected(item: MenuItem): Boolean
     {
-        when (item?.itemId)
+        when (item.itemId)
         {
             R.id.menu_sign_out ->
             {
+                Server.getInstance(this).resetCookies();
                 val intent = Intent(this,LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
@@ -104,5 +107,19 @@ class TeamSearchActivity : AppCompatActivity()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPostClick(position: Int)
+    {
+
+        val postData: String = Gson().toJson(posts!![position])
+        Log.d("Testukas", postData)
+        //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val intent = Intent(this,PostViewActivity::class.java)
+        //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+        intent.putExtra(TeamSearchActivity.POST_DATA, postData)
+
+        startActivity(intent)
     }
 }
