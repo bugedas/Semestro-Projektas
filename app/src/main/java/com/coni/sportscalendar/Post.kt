@@ -2,6 +2,7 @@ package com.coni.sportscalendar
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class Post(
     @SerializedName("ID")
@@ -16,6 +17,12 @@ data class Post(
     @SerializedName("sport")
     @Expose(serialize = true, deserialize = true)
     val sport:String,
+    //@SerializedName("startTime")
+    //@Expose(serialize = true, deserialize = true)
+    //val startTime:Date,
+    //@SerializedName("endTime")
+    //@Expose(serialize = true, deserialize = true)
+    //val endTime:Date,
     @Expose(serialize = true)
     @SerializedName("Location")
     val location:String)
