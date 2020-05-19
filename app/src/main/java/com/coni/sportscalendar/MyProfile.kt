@@ -35,10 +35,12 @@ class MyProfile : AppCompatActivity() {
     private val successFetchPostsResponse = Response.Listener <JSONObject>()
     { response ->
         val jsonParser = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
-        Log.d("LoginActivity", "NetworkResponse : ${response.toString()}")
+        Log.d("Acount", "NetworkResponse : ${response.toString()}")
         val data: UserRegistrationInformation = jsonParser.fromJson(response.toString(), UserRegistrationInformation::class.java)
         user = data
 
+        Log.d("Acount", "${response.toString()}")
+        Log.d("Acount", "${data.username}")
         myProfile_name.text = data.username
         myProfile_email.text = data.email
 
