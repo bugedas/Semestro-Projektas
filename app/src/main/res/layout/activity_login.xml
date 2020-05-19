@@ -22,11 +22,11 @@
         android:src="@mipmap/ic_launcher" />
 
         <EditText
-            android:id="@+id/editText_Name"
-            style="@style/LoginEditText"
-            android:paddingTop="5dp"
-            android:hint="Name"
-            android:inputType="textPersonName" />
+    android:id="@+id/editText_Name"
+    style="@style/LoginEditText"
+    android:paddingTop="5dp"
+    android:hint="Name"
+    android:inputType="textPersonName" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"

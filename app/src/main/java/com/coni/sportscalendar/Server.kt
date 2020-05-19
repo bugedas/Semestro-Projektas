@@ -118,4 +118,13 @@ class Server private constructor(private val context: Context)
         HttpConnection.getInstance(context).addToRequestQueue(request)
     }
 
+
+    fun getUserInfo (onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    {
+        val request = requestBuilder.buildJsonRequest(Request.Method.GET, registerPath, null, onSuccess, onFail)
+
+        Log.d("Server", "Getting user information")
+        HttpConnection.getInstance(context).addToRequestQueue(request)
+    }
+
 }
