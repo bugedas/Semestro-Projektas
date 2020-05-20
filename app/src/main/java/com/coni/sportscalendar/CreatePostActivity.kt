@@ -21,8 +21,8 @@ class CreatePostActivity : AppCompatActivity() {
         var date = Date()
         button_submit.setOnClickListener()
         {
-            val post = Post(0,1,create_description.text.toString(), create_sport.text.toString(),create_location.text.toString())//,
-                //Date(100,24,234,1,5,6))
+            val post = Post(0,1,editText_postDescription.text.toString(), editText_SportType.text.toString(),editText_postLocation.text.toString())//,
+            //                //Date(100,24,234,1,5,6))
             Server.getInstance(this).createPost(post, successPostResponse)
         }
 
