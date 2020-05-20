@@ -64,7 +64,7 @@
     <EditText
         android:id="@+id/myProfile_description"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="140dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:background="@color/colorPrimary"
@@ -74,8 +74,7 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
 
-        android:text="A description that should be no longer than 255 characters. Should take a fixed space on the bottom though"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
