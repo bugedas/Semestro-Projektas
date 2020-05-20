@@ -5,14 +5,18 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Response
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_post_view.*
 import kotlinx.android.synthetic.main.activity_team_search.*
 import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -33,9 +37,9 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team_search)
 
-        supportActionBar?.title = ""
+        supportActionBar?.title = "Events"
 
-        CheckIfUserIsLoggedIn()
+        checkIfUserIsLoggedIn()
         initRecyclerView()
     }
 
@@ -71,14 +75,19 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
         }
     }
 
-    private fun CheckIfUserIsLoggedIn ()
+    private fun checkIfUserIsLoggedIn ()
     {
-        if(false)
+        val onFailed = Response.ErrorListener ()
         {
             val intent = Intent(this,LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
+        val onSuccess = Response.Listener <JSONObject>()
+        {
+        }
+        Server.getInstance(this).checkIfAccIsSignedIn(onSuccess, onFailed)
+
     }
 
     @Override
@@ -95,10 +104,8 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
         {
             R.id.menu_sign_out ->
             {
-                Server.getInstance(this).resetCookies();
-                val intent = Intent(this,LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
+                Server.getInstance(this).requestLogOut(successLogOutResponse)
+
             }
             R.id.create_post ->
             {
@@ -114,9 +121,16 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
         return super.onOptionsItemSelected(item)
     }
 
+    private val successLogOutResponse = Response.Listener <JSONObject>()
+    {
+        Server.getInstance(this).resetCookies()
+        val intent = Intent(this,LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
+
     override fun onPostClick(position: Int)
     {
-
         val postData: String = Gson().toJson(posts!![position])
         Log.d("Testukas", postData)
         //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)

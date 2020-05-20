@@ -41,6 +41,22 @@ class Server private constructor(private val context: Context)
         cookieManager.cookieStore.removeAll();
     }
 
+    fun checkIfAccIsSignedIn (onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    {
+        val request = requestBuilder.buildJsonRequest(Request.Method.GET, "$loginPath", null, onSuccess, onFail)
+
+        Log.d("Server", "Singing out user from server")
+        HttpConnection.getInstance(context).addToRequestQueue(request)
+    }
+
+    fun requestLogOut (onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    {
+        val request = requestBuilder.buildJsonRequest(Request.Method.DELETE, "$loginPath", null, onSuccess, onFail)
+
+        Log.d("Server", "Singing out user from server")
+        HttpConnection.getInstance(context).addToRequestQueue(request)
+    }
+
     fun getPosts (onSuccess: Response.Listener <JSONArray>, onFail : Response.ErrorListener? = null)
     {
         val request = requestBuilder.buildJsonArrayRequest(Request.Method.GET, "$postPath", null, onSuccess, onFail)

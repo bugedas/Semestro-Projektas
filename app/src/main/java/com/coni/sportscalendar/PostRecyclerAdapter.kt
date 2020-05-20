@@ -39,7 +39,7 @@ class PostRecyclerAdapter(private val onPostClickListener :OnPostClickListener):
     class PostViewHolder constructor(itemView: View, val onPostListener :OnPostClickListener): RecyclerView.ViewHolder(itemView), View.OnClickListener
     {
         val textViewLocation = itemView.textView_location
-        val textViewAuthor = itemView.textView_author
+        val textViewAuthor = itemView.textView_creator
         val textViewDescription = itemView.textView_description
 
         fun bind(post: Post)
