@@ -112,8 +112,11 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
                 val intent = Intent(this,CreatePostActivity::class.java)
                 startActivity(intent)
             }
-
-
+            R.id.profile ->
+            {
+                val intent = Intent(this,MyProfile::class.java)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
