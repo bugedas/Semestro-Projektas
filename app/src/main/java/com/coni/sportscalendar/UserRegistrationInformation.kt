@@ -15,6 +15,9 @@ data class UserRegistrationInformation(
     val repeatPassword:String,
     @SerializedName("email", alternate = ["Email"])
     @Expose(serialize = true, deserialize = true)
-    val email:String)
+    val email:String,
+    @SerializedName("gender", alternate = ["Gender"])
+    @Expose(serialize = true, deserialize = true)
+    val gender:String)
 {
 }
