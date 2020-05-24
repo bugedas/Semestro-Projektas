@@ -23,7 +23,9 @@ class PostViewActivity : AppCompatActivity() {
 
         textView_postView_descriptionResult.text = "${postData.description} "
         textView_postView_locationResult.text = "${postData.location} "
-        //textView_postView_sportTypeResult.text = "${postData.}"
+        textView_postView_sportTypeResult.text = "${postData.sport}"
+        textView_postView_creatorResult.text = "${postData.authorName}"
+        textView_postView_timeResult.text = "${postData.startTime}"
 
         button_postView_join.setOnClickListener()
         {
@@ -41,14 +43,12 @@ class PostViewActivity : AppCompatActivity() {
 
     private val successJoinPostResponse = Response.Listener <JSONObject>()
     {
-        textView_postView_locationResult.text = "Joined"
         button_postView_join.setImageResource(R.mipmap.post_view_exit)
         isJoined = !isJoined
     }
 
     private val successLeavePostResponse = Response.Listener <JSONObject>()
     {
-        textView_postView_locationResult.text = "Leaved"
         button_postView_join.setImageResource(R.mipmap.post_view_join)
         isJoined = !isJoined
     }

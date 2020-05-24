@@ -17,7 +17,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Pvz
         supportActionBar?.title = "Prisijungimas"
 
         button_Login.setOnClickListener()
