@@ -21,18 +21,48 @@ class CreatePostActivity : AppCompatActivity() {
         var date = Date()
         button_submit.setOnClickListener()
         {
-            val post = Post(0,1,editText_postDescription.text.toString(), editText_SportType.text.toString(),editText_postLocation.text.toString())//,
-            //                //Date(100,24,234,1,5,6))
+
+            var StartD = "" + editText_StartDate.text + "T" + editText_StartTime.text + ":00Z"
+            var EndD = "" + editText_EndDate.text + "T" + editText_EndTime.text + ":00Z"
+
+            val post = Post(0,1,editText_postDescription.text.toString(), editText_SportType.text.toString(), StartD.toString(), EndD.toString(),editText_postLocation.text.toString(), editText_PeopleLimit.text.toString().toInt())
+
             Server.getInstance(this).createPost(post, successPostResponse)
         }
 
         val today = Calendar.getInstance()
 
-        editText_StartDate.text = "" + today.get(Calendar.YEAR) + "/" + (today.get(Calendar.MONTH)+1) + "/" + today.get(Calendar.DAY_OF_MONTH)
-        editText_EndDate.text = "" + today.get(Calendar.YEAR) + "/" + (today.get(Calendar.MONTH)+1) + "/" + today.get(Calendar.DAY_OF_MONTH)
+        editText_StartDate.text = "" + today.get(Calendar.YEAR) + "-" + (today.get(Calendar.MONTH)+1) + "-" + today.get(Calendar.DAY_OF_MONTH)
+        editText_EndDate.text = "" + today.get(Calendar.YEAR) + "-" + (today.get(Calendar.MONTH)+1) + "-" + today.get(Calendar.DAY_OF_MONTH)
+
+        if((today.get(Calendar.MONTH)+1) < 10 && today.get(Calendar.DAY_OF_MONTH) < 10){
+            editText_StartDate.text = "" + today.get(Calendar.YEAR) + "-0" + (today.get(Calendar.MONTH)+1) + "-0" + today.get(Calendar.DAY_OF_MONTH)
+            editText_EndDate.text = "" + today.get(Calendar.YEAR) + "-0" + (today.get(Calendar.MONTH)+1) + "-0" + today.get(Calendar.DAY_OF_MONTH)
+        }
+        else if((today.get(Calendar.MONTH)+1) < 10){
+            editText_StartDate.text = "" + today.get(Calendar.YEAR) + "-0" + (today.get(Calendar.MONTH)+1) + "-" + today.get(Calendar.DAY_OF_MONTH)
+            editText_EndDate.text = "" + today.get(Calendar.YEAR) + "-0" + (today.get(Calendar.MONTH)+1) + "-" + today.get(Calendar.DAY_OF_MONTH)
+        }
+        else if(today.get(Calendar.DAY_OF_MONTH) < 10){
+            editText_StartDate.text = "" + today.get(Calendar.YEAR) + "-" + (today.get(Calendar.MONTH)+1) + "-0" + today.get(Calendar.DAY_OF_MONTH)
+            editText_EndDate.text = "" + today.get(Calendar.YEAR) + "-" + (today.get(Calendar.MONTH)+1) + "-0" + today.get(Calendar.DAY_OF_MONTH)
+        }
 
         editText_StartTime.text = "" + today.get(Calendar.HOUR_OF_DAY) + ":" + today.get(Calendar.MINUTE)
         editText_EndTime.text = "" + today.get(Calendar.HOUR_OF_DAY) + ":" + today.get(Calendar.MINUTE)
+
+        if(today.get(Calendar.MINUTE) < 10 && today.get(Calendar.HOUR_OF_DAY) < 10){
+            editText_StartTime.text = "0" + today.get(Calendar.HOUR_OF_DAY) + ":0" + today.get(Calendar.MINUTE)
+            editText_EndTime.text = "0" + today.get(Calendar.HOUR_OF_DAY) + ":0" + today.get(Calendar.MINUTE)
+        }
+        else if(today.get(Calendar.MINUTE) < 10){
+            editText_StartTime.text = "" + today.get(Calendar.HOUR_OF_DAY) + ":0" + today.get(Calendar.MINUTE)
+            editText_EndTime.text = "" + today.get(Calendar.HOUR_OF_DAY) + ":0" + today.get(Calendar.MINUTE)
+        }
+        else if(today.get(Calendar.HOUR_OF_DAY) < 10){
+            editText_StartTime.text = "0" + today.get(Calendar.HOUR_OF_DAY) + ":" + today.get(Calendar.MINUTE)
+            editText_EndTime.text = "0" + today.get(Calendar.HOUR_OF_DAY) + ":" + today.get(Calendar.MINUTE)
+        }
 
 
 
@@ -40,7 +70,19 @@ class CreatePostActivity : AppCompatActivity() {
 
 
             val startDate = Calendar.getInstance()
-            val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth -> editText_StartDate.text = "" + year + "/" + (month+1) + "/" + dayOfMonth
+            val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                editText_StartDate.text = "" + year + "-" + (month+1) + "-" + dayOfMonth
+
+                if(month+1 < 10 && dayOfMonth < 10){
+                    editText_StartDate.text = "" + year + "-0" + (month+1) + "-0" + dayOfMonth
+                }
+                else if(month+1 < 10){
+                    editText_StartDate.text = "" + year + "-0" + (month+1) + "-" + dayOfMonth
+                }
+                else if(dayOfMonth < 10){
+                    editText_StartDate.text = "" + year + "-" + (month+1) + "-0" + dayOfMonth
+                }
+
             }, today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH))
 
             datePicker.show()
@@ -53,7 +95,19 @@ class CreatePostActivity : AppCompatActivity() {
 
 
             val startDate = Calendar.getInstance()
-            val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth -> editText_EndDate.text = "" + year + "/" + (month+1) + "/" + dayOfMonth
+            val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                editText_EndDate.text = "" + year + "-" + (month+1) + "-" + dayOfMonth
+
+                if(month+1 < 10 && dayOfMonth < 10){
+                    editText_EndDate.text = "" + year + "-0" + (month+1) + "-0" + dayOfMonth
+                }
+                else if(month+1 < 10){
+                    editText_EndDate.text = "" + year + "-0" + (month+1) + "-" + dayOfMonth
+                }
+                else if(dayOfMonth < 10){
+                    editText_EndDate.text = "" + year + "-" + (month+1) + "-0" + dayOfMonth
+                }
+
             }, today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH))
 
             datePicker.show()

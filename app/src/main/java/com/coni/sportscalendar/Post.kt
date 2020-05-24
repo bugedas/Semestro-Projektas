@@ -17,15 +17,18 @@ data class Post(
     @SerializedName("sport")
     @Expose(serialize = true, deserialize = true)
     val sport:String,
-    //@SerializedName("startTime")
-    //@Expose(serialize = true, deserialize = true)
-    //val startTime:Date,
-    //@SerializedName("endTime")
-    //@Expose(serialize = true, deserialize = true)
-    //val endTime:Date,
+    @SerializedName("startTime")
+    @Expose(serialize = true, deserialize = true)
+    val startTime:String,
+    @SerializedName("endTime")
+    @Expose(serialize = true, deserialize = true)
+    val endTime:String,
     @Expose(serialize = true)
     @SerializedName("Location")
-    val location:String)
+    val location:String,
+    @SerializedName("limit")
+    @Expose(serialize = true, deserialize = true)
+    val limit:Int)
 {
 
 }
