@@ -143,4 +143,14 @@ class Server private constructor(private val context: Context)
         HttpConnection.getInstance(context).addToRequestQueue(request)
     }
 
+    fun PasswordChange (passwords: Password, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    {
+        val jsonObj = JSONObject(jasonParser.toJson(passwords))
+        val request = requestBuilder.buildJsonRequest( Request.Method.PATCH, registerPath, jsonObj, onSuccess, onFail)
+
+
+        Log.d("Server", "Changing password")
+        HttpConnection.getInstance(context).addToRequestQueue(request)
+    }
+
 }

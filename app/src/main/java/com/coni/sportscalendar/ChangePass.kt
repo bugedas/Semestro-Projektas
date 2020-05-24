@@ -8,6 +8,7 @@ import com.android.volley.Response
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_change_pass.*
 import kotlinx.android.synthetic.main.activity_my_profile.*
+import kotlinx.android.synthetic.main.activity_registration.*
 import org.json.JSONObject
 
 class ChangePass : AppCompatActivity() {
@@ -21,12 +22,8 @@ class ChangePass : AppCompatActivity() {
 
         changePass_Button.setOnClickListener(){
 
-            Server.getInstance(this).getUserInfo(successFetchPostsResponse)
-
-            if( changePass_OldPass.text.equals(user?.password)){
-                val intent = Intent(this,MyProfile::class.java)
-                startActivity(intent)
-            }
+            val change :Password = Password( changePass_OldPass.text.toString(), changePass_NewPass.text.toString(), changePass_RepeatNewPass.text.toString())
+            Server.getInstance(this).PasswordChange(change, successChangePassResponse)
 
 
 
@@ -37,18 +34,10 @@ class ChangePass : AppCompatActivity() {
 
     }
 
-    private val successFetchPostsResponse = Response.Listener <JSONObject>()
+    private val successChangePassResponse = Response.Listener <JSONObject>()
     { response ->
-        val jsonParser = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
-        Log.d("Change pass", "NetworkResponse : ${response.toString()}")
-        val data: UserRegistrationInformation = jsonParser.fromJson(response.toString(), UserRegistrationInformation::class.java)
-        user = data
-
-        Log.d("Change pass", "${response.toString()}")
-        Log.d("Change pass", "${data.username}")
-
-
-
+        Log.d("ChangePass", "NetworkResponse : ${response.toString()}")
+        finish()
     }
 
 }
