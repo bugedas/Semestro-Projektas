@@ -38,6 +38,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".TeamSearchActivity" />
         </activity>
+        <receiver android:name=".CreatePostActivity$Receiver"/>
         <activity
             android:name=".RegistrationActivity"
             android:windowSoftInputMode="stateHidden">
