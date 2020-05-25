@@ -3,6 +3,7 @@ package com.coni.sportscalendar
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.util.*
+import kotlin.collections.ArrayList
 
 data class Post(
     @SerializedName("ID")
@@ -33,4 +34,7 @@ data class Post(
     @SerializedName("CreatorName")
     @Expose(serialize = false, deserialize = true)
     val authorName:String = ""
+    @SerializedName("Users")
+    @Expose(serialize = false, deserialize = true)
+    val joinedUsers:ArrayList<ProfileInfo> = ArrayList()
 }

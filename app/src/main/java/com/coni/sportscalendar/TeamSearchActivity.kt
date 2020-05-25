@@ -12,6 +12,7 @@ import com.android.volley.Response
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_my_profile.*
 import kotlinx.android.synthetic.main.activity_post_view.*
 import kotlinx.android.synthetic.main.activity_team_search.*
 import org.json.JSONArray
@@ -27,8 +28,11 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
     companion object
     {
         const val POST_DATA: String = "POST_DATA"
+        const val USER_DATA: String = "USER_DATA"
     }
 
+    //private var authorised: Boolean = false
+    private var userInfo: ProfileInfo? = null
     private lateinit var postAdapter: PostRecyclerAdapter
     private var posts: ArrayList<Post>? = null
     @Override
@@ -40,6 +44,9 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
         supportActionBar?.title = "Events"
 
         checkIfUserIsLoggedIn()
+        //while(!authorised)
+        Server.getInstance(this).getUserInfo(successGetUserInfoResponse)
+
         initRecyclerView()
     }
 
@@ -85,6 +92,7 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
         }
         val onSuccess = Response.Listener <JSONObject>()
         {
+            //authorised = true
         }
         Server.getInstance(this).checkIfAccIsSignedIn(onSuccess, onFailed)
 
@@ -132,13 +140,25 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
     override fun onPostClick(position: Int)
     {
         val postData: String = Gson().toJson(posts!![position])
-        Log.d("Testukas", postData)
-        //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-        val intent = Intent(this,PostViewActivity::class.java)
-        //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val userData: String = Gson().toJson(userInfo)
 
-        intent.putExtra(TeamSearchActivity.POST_DATA, postData)
+        if(posts!![position].authorID != userInfo!!.id )
+        {
+            val intent = Intent(this,PostViewActivity::class.java)
 
-        startActivity(intent)
+            //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+            intent.putExtra(TeamSearchActivity.POST_DATA, postData)
+            intent.putExtra(TeamSearchActivity.USER_DATA, userData)
+
+            startActivity(intent)
+        }
+
+    }
+
+    private val successGetUserInfoResponse = Response.Listener <JSONObject>()
+    { response ->
+        val jsonParser = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+        userInfo = jsonParser.fromJson(response.toString(), ProfileInfo::class.java)
     }
 }
