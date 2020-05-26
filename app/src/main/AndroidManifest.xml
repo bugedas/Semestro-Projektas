@@ -12,7 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AuthorisationActivity"
+        <activity android:name=".MyPostsActivity"
+            android:theme="@style/ActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TeamSearchActivity" />
+        </activity>
+        <activity
+            android:name=".AuthorisationActivity"
             android:theme="@style/AuthPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -85,12 +92,10 @@
         </activity>
         <activity
             android:name=".TeamSearchActivity"
-            android:theme="@style/ActionBar">
-        </activity>
+            android:theme="@style/ActionBar"></activity>
         <activity
             android:name=".LoginActivity"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
 
 </manifest>

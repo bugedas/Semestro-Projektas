@@ -5,20 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Response
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_my_profile.*
-import kotlinx.android.synthetic.main.activity_post_view.*
 import kotlinx.android.synthetic.main.activity_team_search.*
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -122,6 +116,13 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
             R.id.profile ->
             {
                 val intent = Intent(this,MyProfile::class.java)
+                startActivity(intent)
+            }
+            R.id.my_posts ->
+            {
+                val userData: String = Gson().toJson(userInfo)
+                val intent = Intent(this,MyPostsActivity::class.java)
+                intent.putExtra(TeamSearchActivity.USER_DATA, userData)
                 startActivity(intent)
             }
         }

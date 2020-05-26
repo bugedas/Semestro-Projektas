@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.user_post.view.*
 import kotlin.math.min
 
-class PostRecyclerAdapter(private val onPostClickListener :OnPostClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>()
+class PostRecyclerAdapter(private val onPostClickListener: OnPostClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
     private var items = ArrayList<Post>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder

@@ -15,7 +15,7 @@ import org.json.JSONArray
 
 class Server private constructor(private val context: Context)
 {
-    private val serverUrl :String = "http://10.0.2.2:8000"
+    private val serverUrl :String = "http://10.0.2.2:8000" //"http://projektas.ddns.net:8000"
     private val loginPath :String = "/login"
     private val registerPath :String = "/account"
     private val postPath :String = "/events"
