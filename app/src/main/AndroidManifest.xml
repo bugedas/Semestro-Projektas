@@ -12,7 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PostOwnerViewActivity"
+        <activity android:name=".AuthorisationActivity"
+            android:theme="@style/AuthPage">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PostOwnerViewActivity"
             android:theme="@style/ActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -24,7 +33,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MyProfile" />
-            >
         </activity>
         <activity
             android:name=".MyProfile"
@@ -78,20 +86,10 @@
         <activity
             android:name=".TeamSearchActivity"
             android:theme="@style/ActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".LoginActivity"
             android:windowSoftInputMode="stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

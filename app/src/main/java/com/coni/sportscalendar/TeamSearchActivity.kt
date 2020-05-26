@@ -42,8 +42,9 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
         setContentView(R.layout.activity_team_search)
 
         supportActionBar?.title = "Events"
+        Server.getInstance(this).getUserInfo(successGetUserInfoResponse)
 
-        checkIfUserIsLoggedIn()
+
         //while(!authorised)
 
 
@@ -94,22 +95,7 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
         }
     }
 
-    private fun checkIfUserIsLoggedIn ()
-    {
-        val onFailed = Response.ErrorListener ()
-        {
-            val intent = Intent(this,LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-        }
-        val onSuccess = Response.Listener <JSONObject>()
-        {
-            Server.getInstance(this).getUserInfo(successGetUserInfoResponse)
-            //authorised = true
-        }
-        Server.getInstance(this).checkIfAccIsSignedIn(onSuccess, onFailed)
 
-    }
 
     @Override
     override fun onCreateOptionsMenu(menu: Menu?): Boolean
