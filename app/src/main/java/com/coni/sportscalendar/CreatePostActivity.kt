@@ -21,6 +21,7 @@ class CreatePostActivity : AppCompatActivity() {
     lateinit var context : Context
     lateinit var alarmManager: AlarmManager
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -32,8 +33,10 @@ class CreatePostActivity : AppCompatActivity() {
         var valanda = date.get(Calendar.HOUR_OF_DAY)
         var min = date.get(Calendar.MINUTE)
 
+
         context = this
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
 
         button_submit.setOnClickListener()
         {
@@ -149,8 +152,10 @@ class CreatePostActivity : AppCompatActivity() {
 
             val startDate = Calendar.getInstance()
             val timePicker = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+
                 valanda = hourOfDay
                 min = minute
+
                 editText_StartTime.text = "" + hourOfDay + ":" + minute
                 if(minute < 10 && hourOfDay < 10){
                     editText_StartTime.text = "0" + hourOfDay + ":0" + minute
@@ -240,6 +245,7 @@ class CreatePostActivity : AppCompatActivity() {
 
 
     }
+
 
     private val successPostResponse = Response.Listener <JSONObject>()
     { response ->
