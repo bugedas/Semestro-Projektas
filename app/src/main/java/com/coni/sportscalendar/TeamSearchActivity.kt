@@ -5,19 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Response
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_post_view.*
 import kotlinx.android.synthetic.main.activity_team_search.*
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -27,8 +22,11 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
     companion object
     {
         const val POST_DATA: String = "POST_DATA"
+        const val USER_DATA: String = "USER_DATA"
     }
 
+    //private var authorised: Boolean = false
+    private var userInfo: ProfileInfo? = null
     private lateinit var postAdapter: PostRecyclerAdapter
     private var posts: ArrayList<Post>? = null
     @Override
@@ -38,8 +36,12 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
         setContentView(R.layout.activity_team_search)
 
         supportActionBar?.title = "Events"
+        Server.getInstance(this).getUserInfo(successGetUserInfoResponse)
 
-        checkIfUserIsLoggedIn()
+
+        //while(!authorised)
+
+
         initRecyclerView()
     }
 
@@ -60,9 +62,21 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
         postAdapter.notifyDataSetChanged()
     }
 
+    private val failedFetchPostsResponse = Response.ErrorListener ()
+    {
+        /*Toast.makeText(
+            this,
+            "Could not find any posts!",
+            Toast.LENGTH_LONG
+        ).show()*/
+        posts = ArrayList()
+        postAdapter.submitList(posts!!)
+        postAdapter.notifyDataSetChanged()
+    }
+
     private fun fetchPosts()
     {
-        Server.getInstance(this).getPosts(successFetchPostsResponse)
+        Server.getInstance(this).getPosts(successFetchPostsResponse,failedFetchPostsResponse)
     }
     private fun initRecyclerView ()
     {
@@ -75,20 +89,7 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
         }
     }
 
-    private fun checkIfUserIsLoggedIn ()
-    {
-        val onFailed = Response.ErrorListener ()
-        {
-            val intent = Intent(this,LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-        }
-        val onSuccess = Response.Listener <JSONObject>()
-        {
-        }
-        Server.getInstance(this).checkIfAccIsSignedIn(onSuccess, onFailed)
 
-    }
 
     @Override
     override fun onCreateOptionsMenu(menu: Menu?): Boolean
@@ -117,6 +118,13 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
                 val intent = Intent(this,MyProfile::class.java)
                 startActivity(intent)
             }
+            R.id.my_posts ->
+            {
+                val userData: String = Gson().toJson(userInfo)
+                val intent = Intent(this,MyPostsActivity::class.java)
+                intent.putExtra(TeamSearchActivity.USER_DATA, userData)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -132,13 +140,36 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
     override fun onPostClick(position: Int)
     {
         val postData: String = Gson().toJson(posts!![position])
-        Log.d("Testukas", postData)
-        //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-        val intent = Intent(this,PostViewActivity::class.java)
-        //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val userData: String = Gson().toJson(userInfo)
 
-        intent.putExtra(TeamSearchActivity.POST_DATA, postData)
+        if(posts!![position].authorID != userInfo!!.id )
+        {
+            val intent = Intent(this,PostViewActivity::class.java)
 
-        startActivity(intent)
+            //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+            intent.putExtra(TeamSearchActivity.POST_DATA, postData)
+            intent.putExtra(TeamSearchActivity.USER_DATA, userData)
+
+            startActivity(intent)
+        }
+        else
+        {
+            val intent = Intent(this,PostOwnerViewActivity::class.java)
+
+            //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+            intent.putExtra(TeamSearchActivity.POST_DATA, postData)
+            intent.putExtra(TeamSearchActivity.USER_DATA, userData)
+
+            startActivity(intent)
+        }
+
+    }
+
+    private val successGetUserInfoResponse = Response.Listener <JSONObject>()
+    { response ->
+        val jsonParser = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+        userInfo = jsonParser.fromJson(response.toString(), ProfileInfo::class.java)
     }
 }
