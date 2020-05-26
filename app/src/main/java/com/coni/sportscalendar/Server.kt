@@ -158,6 +158,14 @@ class Server private constructor(private val context: Context)
         val request = requestBuilder.buildJsonRequest(Request.Method.DELETE, "$postPath/$eventID", null, onSuccess, onFail)
 
         Log.d("Server", "Deleting event. Event id: $eventID")
+
+    fun DescriptionChange (descript: UserDescr, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    {
+        val jsonObj = JSONObject(jasonParser.toJson(descript))
+        val request = requestBuilder.buildJsonRequest( Request.Method.PATCH, registerPath, jsonObj, onSuccess, onFail)
+
+
+        Log.d("Server", "Changing user description")
         HttpConnection.getInstance(context).addToRequestQueue(request)
     }
 
