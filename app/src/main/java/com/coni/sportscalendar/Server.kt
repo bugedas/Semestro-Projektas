@@ -155,7 +155,7 @@ class Server private constructor(private val context: Context)
 
     fun deletePost (eventID :Int,  onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
     {
-        val request = requestBuilder.buildJsonRequest(Request.Method.DELETE, "$postPath/$eventID/users", null, onSuccess, onFail)
+        val request = requestBuilder.buildJsonRequest(Request.Method.DELETE, "$postPath/$eventID", null, onSuccess, onFail)
 
         Log.d("Server", "Deleting event. Event id: $eventID")
         HttpConnection.getInstance(context).addToRequestQueue(request)

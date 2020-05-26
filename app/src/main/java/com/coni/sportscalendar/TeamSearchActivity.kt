@@ -45,7 +45,7 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
 
         checkIfUserIsLoggedIn()
         //while(!authorised)
-        Server.getInstance(this).getUserInfo(successGetUserInfoResponse)
+
 
         initRecyclerView()
     }
@@ -67,9 +67,21 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
         postAdapter.notifyDataSetChanged()
     }
 
+    private val failedFetchPostsResponse = Response.ErrorListener ()
+    {
+        /*Toast.makeText(
+            this,
+            "Could not find any posts!",
+            Toast.LENGTH_LONG
+        ).show()*/
+        posts = ArrayList()
+        postAdapter.submitList(posts!!)
+        postAdapter.notifyDataSetChanged()
+    }
+
     private fun fetchPosts()
     {
-        Server.getInstance(this).getPosts(successFetchPostsResponse)
+        Server.getInstance(this).getPosts(successFetchPostsResponse,failedFetchPostsResponse)
     }
     private fun initRecyclerView ()
     {
@@ -92,6 +104,7 @@ class TeamSearchActivity : AppCompatActivity(), PostRecyclerAdapter.OnPostClickL
         }
         val onSuccess = Response.Listener <JSONObject>()
         {
+            Server.getInstance(this).getUserInfo(successGetUserInfoResponse)
             //authorised = true
         }
         Server.getInstance(this).checkIfAccIsSignedIn(onSuccess, onFailed)

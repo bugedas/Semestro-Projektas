@@ -9,6 +9,8 @@ import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_post_view.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PostViewActivity : AppCompatActivity() {
 
@@ -69,7 +71,10 @@ class PostViewActivity : AppCompatActivity() {
         textView_postView_locationResult.text = "${postData.location} "
         textView_postView_sportTypeResult.text = "${postData.sport}"
         textView_postView_creatorResult.text = "${postData.authorName}"
-        textView_postView_timeResult.text = "${postData.startTime}"
+        //textView_postView_timeResult.text = "${postData.startTime}"
+        val date = postData.startTime.split('T')
+        val time = date[1].split(':')
+        textView_postView_timeResult.text = "${date[0]} ${time[0]}:${time[1]}"
         updateParticipants()
     }
 
