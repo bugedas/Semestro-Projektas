@@ -153,4 +153,14 @@ class Server private constructor(private val context: Context)
         HttpConnection.getInstance(context).addToRequestQueue(request)
     }
 
+    fun DescriptionChange (descript: UserDescr, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
+    {
+        val jsonObj = JSONObject(jasonParser.toJson(descript))
+        val request = requestBuilder.buildJsonRequest( Request.Method.PATCH, registerPath, jsonObj, onSuccess, onFail)
+
+
+        Log.d("Server", "Changing user description")
+        HttpConnection.getInstance(context).addToRequestQueue(request)
+    }
+
 }

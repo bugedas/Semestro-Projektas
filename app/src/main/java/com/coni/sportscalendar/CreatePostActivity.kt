@@ -36,6 +36,8 @@ class CreatePostActivity : AppCompatActivity() {
 
         context = this
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+
         button_submit.setOnClickListener()
         {
 
@@ -196,6 +198,7 @@ class CreatePostActivity : AppCompatActivity() {
 
     }
 
+
     class Receiver : BroadcastReceiver(){
 
         lateinit var notificationManager: NotificationManager
@@ -242,7 +245,6 @@ class CreatePostActivity : AppCompatActivity() {
 
 
     }
-
 
 
     private val successPostResponse = Response.Listener <JSONObject>()
