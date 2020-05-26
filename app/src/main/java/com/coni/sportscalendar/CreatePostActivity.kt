@@ -1,26 +1,49 @@
 package com.coni.sportscalendar
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
+import android.app.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.android.volley.Response
 import kotlinx.android.synthetic.main.activity_create_post.*
 import org.json.JSONObject
+import java.time.Year
 import java.util.*
 
 class CreatePostActivity : AppCompatActivity() {
 
-
+    lateinit var context : Context
+    lateinit var alarmManager: AlarmManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
 
-        var date = Date()
+        var date = Calendar.getInstance()
+        var metai = date.get(Calendar.YEAR)
+        var men = date.get(Calendar.MONTH)
+        var diena = date.get(Calendar.DAY_OF_MONTH)
+        var valanda = date.get(Calendar.HOUR_OF_DAY)
+        var min = date.get(Calendar.MINUTE)
+
+        context = this
+        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
         button_submit.setOnClickListener()
         {
+
+            date.set(metai, men, diena, valanda, min)
+            val intent = Intent(context,Receiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+            alarmManager.set(AlarmManager.RTC_WAKEUP, date.timeInMillis - 600000, pendingIntent)
+            Log.d("Timer","created: " + Date().toString() )
+
 
             var StartD = "" + editText_StartDate.text + "T" + editText_StartTime.text + ":00Z"
             var EndD = "" + editText_EndDate.text + "T" + editText_EndTime.text + ":00Z"
@@ -71,6 +94,10 @@ class CreatePostActivity : AppCompatActivity() {
 
             val startDate = Calendar.getInstance()
             val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+
+                metai = year
+                men = month
+                diena = dayOfMonth
                 editText_StartDate.text = "" + year + "-" + (month+1) + "-" + dayOfMonth
 
                 if(month+1 < 10 && dayOfMonth < 10){
@@ -122,6 +149,8 @@ class CreatePostActivity : AppCompatActivity() {
 
             val startDate = Calendar.getInstance()
             val timePicker = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                valanda = hourOfDay
+                min = minute
                 editText_StartTime.text = "" + hourOfDay + ":" + minute
                 if(minute < 10 && hourOfDay < 10){
                     editText_StartTime.text = "0" + hourOfDay + ":0" + minute
@@ -161,6 +190,54 @@ class CreatePostActivity : AppCompatActivity() {
 
             timePicker.show()
         }
+
+    }
+
+
+    class Receiver : BroadcastReceiver(){
+
+        lateinit var notificationManager: NotificationManager
+        lateinit var notificationChannel: NotificationChannel
+        lateinit var builder: Notification.Builder
+        private val channelID = "com.coni.sportscalendar"
+        private val description = "Your event will start soon"
+
+
+        override fun onReceive(context: Context?, intent: Intent?) {
+            //Notification
+            Log.d("Timer", "received: " + Date().toString())
+
+            notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val intent = Intent(context, LoginActivity::class.java)
+            val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                notificationChannel = NotificationChannel(channelID, description, NotificationManager.IMPORTANCE_HIGH)
+                notificationChannel.enableLights(true)
+                notificationChannel.lightColor = Color.YELLOW
+                notificationChannel.enableVibration(false)
+                notificationManager.createNotificationChannel(notificationChannel)
+
+                builder = Notification.Builder(context, channelID)
+                    .setContentTitle("Coni")
+                    .setContentText("Your event will start in 10 min.")
+                    .setSmallIcon(R.drawable.ic_launcher_round)
+                    .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.ic_launcher))
+                    .setContentIntent(pendingIntent)
+            }
+            else{
+                builder = Notification.Builder(context)
+                    .setContentTitle("Coni")
+                    .setContentText("Your event will start in 10 min.")
+                    .setSmallIcon(R.drawable.ic_launcher_round)
+                    .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.ic_launcher))
+                    .setContentIntent(pendingIntent)
+            }
+            notificationManager.notify(1234, builder.build())
+
+
+        }
+
 
     }
 
