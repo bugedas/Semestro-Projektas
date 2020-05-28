@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/post_view_description"/>
         <TextView
+            android:paddingHorizontal="16dp"
             android:id="@+id/textView_postView_descriptionResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

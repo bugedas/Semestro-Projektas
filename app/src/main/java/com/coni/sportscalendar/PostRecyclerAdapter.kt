@@ -41,12 +41,14 @@ class PostRecyclerAdapter(private val onPostClickListener: OnPostClickListener):
         val textViewLocation = itemView.textView_location
         val textViewAuthor = itemView.textView_creator
         val textViewDescription = itemView.textView_description
+        val textViewSportType = itemView.textView_sport
 
         fun bind(post: Post)
         {
             textViewLocation.text = post.location
             textViewAuthor.text = post.authorName.toString()
-            textViewDescription.text = post.description.substring(0, min(post.description.length, 150)) + " ..."
+            textViewSportType.text = post.sport
+            textViewDescription.text = post.description.substring(0, min(post.description.length, 150))
 
             itemView.setOnClickListener(this)
         }

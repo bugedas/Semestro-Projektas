@@ -15,7 +15,7 @@ import org.json.JSONArray
 
 class Server private constructor(private val context: Context)
 {
-    private val serverUrl :String = "http://10.0.2.2:8000" //"http://projektas.ddns.net:8000"
+    private val serverUrl :String =  "http://10.0.2.2:8000"  // "http://projektas.ddns.net:8000"
     private val loginPath :String = "/login"
     private val registerPath :String = "/account"
     private val postPath :String = "/events"
@@ -153,11 +153,18 @@ class Server private constructor(private val context: Context)
         HttpConnection.getInstance(context).addToRequestQueue(request)
     }
 
-    fun deletePost (eventID :Int,  onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
-    {
-        val request = requestBuilder.buildJsonRequest(Request.Method.DELETE, "$postPath/$eventID", null, onSuccess, onFail)
+    fun deletePost (eventID :Int,  onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null) {
+        val request = requestBuilder.buildJsonRequest(
+            Request.Method.DELETE,
+            "$postPath/$eventID",
+            null,
+            onSuccess,
+            onFail
+        )
 
         Log.d("Server", "Deleting event. Event id: $eventID")
+        HttpConnection.getInstance(context).addToRequestQueue(request)
+    }
 
     fun DescriptionChange (descript: UserDescr, onSuccess: Response.Listener <JSONObject>, onFail : Response.ErrorListener? = null)
     {
